@@ -322,6 +322,7 @@ cat >>"feeds.conf.default" <<-EOF
 src-git danshui1 https://github.com/281677160/openwrt-package.git;${SOURCE}
 src-git helloworld https://github.com/fw876/helloworld.git
 src-git passwall3 https://github.com/xiaorouji/openwrt-passwall-packages;main
+src-git bypass https://github.com/shidahuilang/openwrt-package.git
 EOF
 ./scripts/feeds update -a
 
