@@ -1912,14 +1912,17 @@ if [[ `ls -1 | grep -c "armvirt"` -eq '0' ]]; then
   mv openwrt/bin/targets/x86/64/*-efi.img.gz ./artifact/
   mv openwrt/bin/targets/x86/64/*-legacy.img.gz ./artifact/
   cd ./artifact/
+  echo "artifact原始文件夹下有："
   ls -Ahl
   gzip -d *.gz && exit 0
   gzip --best *.img
+  echo "artifact压缩后的文件夹下有："
   ls -Ahl
   zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}-efi.zip *efi.img.gz
   zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}.zip *legacy.img.gz
   rm -rf *legacy.img.gz
   rm -rf *uefi.img.gz
+  echo "artifact整理完成后的文件夹下有："
   ls -Ahl
 fi
 sudo rm -rf "${CLEAR_PATH}"
