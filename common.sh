@@ -1906,7 +1906,21 @@ done
 
 if [[ `ls -1 | grep -c "armvirt"` -eq '0' ]]; then
   #rename -v "s/^openwrt/${Gujian_Date}-${SOURCE}-${LUCI_EDITION}-${LINUX_KERNEL}/" *
-  rename -v "s/^openwrt/OpenWrt_${CONFIG_FILE}_${Firmware_Date}/" *
+  #rename -v "s/^openwrt/OpenWrt_${CONFIG_FILE}_${Firmware_Date}/" *
+  rm -rf ./artifact/
+  mkdir -p ./artifact/
+  mv openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz ./artifact/
+  mv openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz ./artifact/
+  cd ./artifact/
+  ls -Ahl
+  gzip -d *.gz && exit 0
+  gzip --best *.img
+  ls -Ahl
+  zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}.zip *combined.img.gz
+  zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}-efi.zip *combined-efi.img.gz
+  rm -rf *combined.img.gz
+  rm -rf *combined-efi.img.gz
+  ls -Ahl
 fi
 sudo rm -rf "${CLEAR_PATH}"
 }
