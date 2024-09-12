@@ -1909,15 +1909,15 @@ if [[ `ls -1 | grep -c "armvirt"` -eq '0' ]]; then
   #rename -v "s/^openwrt/OpenWrt_${CONFIG_FILE}_${Firmware_Date}/" *
   rm -rf ./artifact/
   mkdir -p ./artifact/
-  mv openwrt/bin/targets/x86/64/*-uefi.img.gz ./artifact/
+  mv openwrt/bin/targets/x86/64/*-efi.img.gz ./artifact/
   mv openwrt/bin/targets/x86/64/*-legacy.img.gz ./artifact/
   cd ./artifact/
   ls -Ahl
   gzip -d *.gz && exit 0
   gzip --best *.img
   ls -Ahl
+  zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}-efi.zip *efi.img.gz
   zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}.zip *legacy.img.gz
-  zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}-efi.zip *uefi.img.gz
   rm -rf *legacy.img.gz
   rm -rf *uefi.img.gz
   ls -Ahl
