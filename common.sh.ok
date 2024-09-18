@@ -186,7 +186,7 @@ echo "KEEPD_PATH=${GITHUB_WORKSPACE}/openwrt/package/base-files/files/lib/upgrad
 echo "GENE_PATH=${GITHUB_WORKSPACE}/openwrt/package/base-files/files/bin/config_generate" >> ${GITHUB_ENV}
 echo "CLEAR_PATH=${GITHUB_WORKSPACE}/openwrt/Clear" >> ${GITHUB_ENV}
 echo "Upgrade_Date=`date -d "$(date +'%Y-%m-%d %H:%M:%S')" +%s`" >> ${GITHUB_ENV}
-echo "Firmware_Date=$(date +%Y-%m%d-%H%M)" >> ${GITHUB_ENV}
+echo "Firmware_Date=$(date +%Y%m%d%H%M)" >> ${GITHUB_ENV}
 echo "Compte_Date=$(date +%Y年%m月%d号%H时%M分)" >> ${GITHUB_ENV}
 echo "Tongzhi_Date=$(date +%Y年%m月%d日)" >> ${GITHUB_ENV}
 echo "Gujian_Date=$(date +%m.%d)" >> ${GITHUB_ENV}
@@ -1906,7 +1906,24 @@ done
 
 if [[ `ls -1 | grep -c "armvirt"` -eq '0' ]]; then
   #rename -v "s/^openwrt/${Gujian_Date}-${SOURCE}-${LUCI_EDITION}-${LINUX_KERNEL}/" *
-  rename -v "s/^openwrt/OpenWrt_${CONFIG_FILE}_${Firmware_Date}/" *
+  #rename -v "s/^openwrt/OpenWrt_${CONFIG_FILE}_${Firmware_Date}/" *
+  rm -rf ./artifact/
+  mkdir -p ./artifact/
+  mv openwrt/bin/targets/x86/64/*efi.img.gz ./artifact/
+  mv openwrt/bin/targets/x86/64/*legacy.img.gz ./artifact/
+  cd ./artifact/
+  echo "artifact原始文件夹下有："
+  ls -Ahl
+  gzip -d *.gz && exit 0
+  gzip --best *.img
+  echo "artifact压缩后的文件夹下有："
+  ls -Ahl
+  zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}-efi.zip *efi.img.gz
+  zip OpenWrt-${CONFIG_FILE}_${Firmware_Date}.zip *legacy.img.gz
+  rm -rf *legacy.img.gz
+  rm -rf *uefi.img.gz
+  echo "artifact整理完成后的文件夹下有："
+  ls -Ahl
 fi
 sudo rm -rf "${CLEAR_PATH}"
 }
