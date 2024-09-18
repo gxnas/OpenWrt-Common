@@ -1909,8 +1909,8 @@ if [[ `ls -1 | grep -c "armvirt"` -eq '0' ]]; then
   #rename -v "s/^openwrt/OpenWrt_${CONFIG_FILE}_${Firmware_Date}/" *
   rm -rf ./artifact/
   mkdir -p ./artifact/
-  mv openwrt/bin/targets/x86/64/*-efi.img.gz ./artifact/
-  mv openwrt/bin/targets/x86/64/*-legacy.img.gz ./artifact/
+  mv openwrt/bin/targets/x86/64/*efi.img.gz ./artifact/
+  mv openwrt/bin/targets/x86/64/*legacy.img.gz ./artifact/
   cd ./artifact/
   echo "artifact原始文件夹下有："
   ls -Ahl
